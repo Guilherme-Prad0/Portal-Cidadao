@@ -1,10 +1,12 @@
+package repository;
+
 import model.Solicitacao;
 
 import java.util.*;
 
 public class BancoSolicitacoes {
 
-    List<Solicitacao> lista = new ArrayList<>();
+    private final List<Solicitacao> lista = new ArrayList<>();
 
     public void salvar(Solicitacao s) {
         lista.add(s);
@@ -16,7 +18,7 @@ public class BancoSolicitacoes {
 
     public Solicitacao buscar(String protocolo) {
         for (Solicitacao s : lista) {
-            if (s.protocolo.equals(protocolo)) {
+            if (s.getProtocolo().equals(protocolo)) {
                 return s;
             }
         }

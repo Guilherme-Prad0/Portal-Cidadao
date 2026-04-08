@@ -2,6 +2,7 @@ import model.Solicitacao;
 import model.Usuario;
 import model.enums.Categoria;
 import model.enums.Status;
+import repository.BancoSolicitacoes;
 
 import java.util.Scanner;
 
