@@ -10,7 +10,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         BancoSolicitacoes banco    = new BancoSolicitacoes();
-        ServicoSolicitacoes servico = new ServicoSolicitacoes(banco);  // injeção de dependência
+        ServicoSolicitacoes servico = new ServicoSolicitacoes(banco);
         MenuController controller  = new MenuController(servico, sc);
 
         controller.iniciar();

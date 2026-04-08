@@ -43,6 +43,7 @@ public class MenuController {
         } while (opcao != 0);
     }
 
+    // ================= CRIAR =================
     private void fluxoCriarSolicitacao() {
         System.out.println("\n=== NOVA SOLICITAÇÃO ===");
 
@@ -52,10 +53,12 @@ public class MenuController {
         Categoria categoria = lerCategoria();
         if (categoria == null) return;
 
+        // ===== DESCRIÇÃO =====
         System.out.print("Descrição: ");
         String descricao = sc.nextLine().trim();
         if (descricao.isEmpty()) { System.out.println("Descrição não pode ser vazia!"); return; }
 
+        // ===== BAIRRO =====
         System.out.print("Bairro: ");
         String bairro = sc.nextLine().trim();
         if (bairro.isEmpty()) { System.out.println("Bairro obrigatório!"); return; }
@@ -64,11 +67,13 @@ public class MenuController {
         System.out.println("Protocolo gerado: " + s.getProtocolo());
     }
 
+    // ================= LISTAR =================
     private void fluxoListar() {
         System.out.println("\n=== LISTA ===");
         servico.listar();
     }
 
+    // ================= ACOMPANHAR =================
     private void fluxoAcompanhar() {
         System.out.println("\n=== ACOMPANHAMENTO ===");
         System.out.print("Protocolo: ");
@@ -81,8 +86,10 @@ public class MenuController {
         servico.acompanhar(protocolo);
     }
 
+
+    // ================= GESTOR =================
     private void fluxoPainelGestor() {
-        System.out.println("Acesso ao gestor");
+        System.out.println("🔐 Acesso ao gestor (senha: admin)");
         System.out.print("Digite a senha: ");
         String senha = sc.nextLine();
 
@@ -157,6 +164,7 @@ public class MenuController {
         String nome = sc.nextLine().trim();
         if (nome.isEmpty()) { System.out.println("Nome obrigatório!"); return null; }
 
+        // ===== CPF =====
         System.out.print("CPF (somente números): ");
         String cpf = sc.nextLine().trim();
         if (cpf.length() != 11 || !cpf.chars().allMatch(Character::isDigit)) {
@@ -164,6 +172,7 @@ public class MenuController {
             return null;
         }
 
+        // ===== TELEFONE =====
         System.out.print("Telefone (somente números): ");
         String telefone = sc.nextLine().trim();
         if ((telefone.length() < 10 || telefone.length() > 11) || !telefone.chars().allMatch(Character::isDigit)) {
@@ -171,6 +180,7 @@ public class MenuController {
             return null;
         }
 
+        // ===== EMAIL =====
         System.out.print("Email: ");
         String email = sc.nextLine().trim();
         if (!email.contains("@") || !email.contains(".")) {
