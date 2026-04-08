@@ -1,4 +1,7 @@
+import model.Solicitacao;
 import model.Usuario;
+import model.enums.Categoria;
+import model.enums.Status;
 
 import java.util.Scanner;
 
@@ -111,7 +114,7 @@ public class Main {
                         }
 
                         // ===== CATEGORIA =====
-                        System.out.println("Categoria:");
+                        System.out.println("model.enums.Categoria:");
                         for (Categoria c : Categoria.values()) {
                             System.out.println(c.ordinal() + " - " + c);
                         }
@@ -132,7 +135,7 @@ public class Main {
 
                             if (cat >= 0 && cat < Categoria.values().length) break;
 
-                            System.out.println("Categoria inválida!");
+                            System.out.println("model.enums.Categoria inválida!");
                         }
 
                         Categoria categoria = Categoria.values()[cat];
@@ -215,7 +218,7 @@ public class Main {
                                     System.out.print("Bairro (ENTER = todos): ");
                                     String b = sc.nextLine().trim();
 
-                                    System.out.println("Categoria (-1 = todas): ");
+                                    System.out.println("model.enums.Categoria (-1 = todas): ");
                                     for (Categoria c : Categoria.values()) {
                                         System.out.println(c.ordinal() + " - " + c);
                                     }
@@ -237,7 +240,7 @@ public class Main {
                                         break;
                                     }
 
-                                    System.out.println("Novo Status:");
+                                    System.out.println("Novo model.enums.Status:");
                                     for (Status st : Status.values()) {
                                         System.out.println(st.ordinal() + " - " + st);
                                     }

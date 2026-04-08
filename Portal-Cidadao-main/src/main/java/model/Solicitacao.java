@@ -1,9 +1,13 @@
-import model.HistoricoStatus;
-import model.Usuario;
+package model;
+
+import model.enums.Categoria;
+import model.enums.Status;
+import model.enums.Prioridade;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 
 public class Solicitacao {
 
@@ -46,13 +50,13 @@ public class Solicitacao {
     @Override
     public String toString() {
         return "\nProtocolo: " + protocolo +
-                "\nCategoria: " + categoria +
+                "\nmodel.enums.Categoria: " + categoria +
                 "\nDescrição: " + descricao +
                 "\nCPF: " + usuario.getCpfMascarado() +
                 "\nBairro: " + bairro +
-                "\nPrioridade: " + prioridade +
+                "\nmodel.enums.Prioridade: " + prioridade +
                 "\nPrazo: " + prazo.format(fmt) +
-                "\nStatus: " + status +
+                "\nmodel.enums.Status: " + status +
                 (isAtrasado() ? "\nProtocolo Atrasado!" : "");
     }
 
@@ -78,9 +82,9 @@ public class Solicitacao {
 
     private LocalDateTime definirPrazo() {
         switch (prioridade){
-            case ALTA: return dataCriacao.plusDays(1);
-            case MEDIA: return dataCriacao.plusDays(3);
-            case BAIXA: return dataCriacao.plusDays(7);
+            case Prioridade.ALTA: return dataCriacao.plusDays(1);
+            case Prioridade.MEDIA: return dataCriacao.plusDays(3);
+            case Prioridade.BAIXA: return dataCriacao.plusDays(7);
             default: return dataCriacao.plusDays(5);
         }
     }

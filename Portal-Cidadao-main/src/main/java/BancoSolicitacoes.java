@@ -1,3 +1,5 @@
+import model.Solicitacao;
+
 import java.util.*;
 
 public class BancoSolicitacoes {

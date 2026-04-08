@@ -1,5 +1,8 @@
 import model.HistoricoStatus;
+import model.Solicitacao;
 import model.Usuario;
+import model.enums.Categoria;
+import model.enums.Status;
 
 public class ServicoSolicitacoes {
 
