@@ -27,7 +27,7 @@ public class Solicitacao {
     private boolean atrasado = false;
     private String justificativaAtraso;
 
-    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
 
     public Solicitacao(Categoria categoria, String descricao, String bairro, Usuario usuario) {
@@ -50,13 +50,13 @@ public class Solicitacao {
     @Override
     public String toString() {
         return "\nProtocolo: " + protocolo +
-                "\nmodel.enums.Categoria: " + categoria +
-                "\nDescrição: " + descricao +
-                "\nCPF: " + usuario.getCpfMascarado() +
-                "\nBairro: " + bairro +
-                "\nmodel.enums.Prioridade: " + prioridade +
-                "\nPrazo: " + prazo.format(fmt) +
-                "\nmodel.enums.Status: " + status +
+                "\nCategoria: "  + categoria +
+                "\nDescrição: "  + descricao +
+                "\nCPF: "        + usuario.getCpfMascarado() +
+                "\nBairro: "     + bairro +
+                "\nPrioridade: " + prioridade +
+                "\nPrazo: "      + prazo.format(fmt) +
+                "\nStatus: "     + status +
                 (isAtrasado() ? "\nProtocolo Atrasado!" : "");
     }
 
@@ -82,9 +82,9 @@ public class Solicitacao {
 
     private LocalDateTime definirPrazo() {
         switch (prioridade){
-            case Prioridade.ALTA: return dataCriacao.plusDays(1);
-            case Prioridade.MEDIA: return dataCriacao.plusDays(3);
-            case Prioridade.BAIXA: return dataCriacao.plusDays(7);
+            case ALTA: return dataCriacao.plusDays(1);
+            case MEDIA: return dataCriacao.plusDays(3);
+            case BAIXA: return dataCriacao.plusDays(7);
             default: return dataCriacao.plusDays(5);
         }
     }
@@ -96,9 +96,8 @@ public class Solicitacao {
     public String getProtocolo()               { return protocolo; }
     public Categoria getCategoria()            { return categoria; }
     public String getBairro()                  { return bairro; }
-    public Status getStatus()                  { return status; }
     public List<HistoricoStatus> getHistorico() { return historico; }
-    public boolean isAtrasadoFlag()            { return atrasado; }
+
 
     public void setAtrasado(boolean atrasado)              { this.atrasado = atrasado; }
     public void setJustificativaAtraso(String justificativa) { this.justificativaAtraso = justificativa; }

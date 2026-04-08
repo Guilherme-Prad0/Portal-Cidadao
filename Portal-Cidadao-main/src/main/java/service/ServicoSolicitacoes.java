@@ -1,13 +1,15 @@
-import model.HistoricoStatus;
+package service;
+
 import model.Solicitacao;
 import model.Usuario;
 import model.enums.Categoria;
 import model.enums.Status;
 import repository.BancoSolicitacoes;
+import model.HistoricoStatus;
 
 public class ServicoSolicitacoes {
 
-    BancoSolicitacoes banco;
+    private final BancoSolicitacoes banco;
 
     public ServicoSolicitacoes(BancoSolicitacoes banco) {
         this.banco = banco;
@@ -24,28 +26,21 @@ public class ServicoSolicitacoes {
         }
 
         if (usuario.isAnonimo()) {
-
             if (descricao.length() < 15) {
                 throw new RuntimeException("Denúncia anônima precisa ser mais detalhada (mín 15 caracteres)");
             }
-
             System.out.println("LOG: Solicitação anônima registrada.");
-        }
-        else {
-
-            if (usuario.nome == null || usuario.nome.isEmpty()) {
+        } else {
+            if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
                 throw new RuntimeException("Nome obrigatório");
             }
-
-            if (usuario.cpf == null || usuario.cpf.length() != 11) {
+            if (usuario.getCpf() == null || usuario.getCpf().length() != 11) {
                 throw new RuntimeException("CPF inválido (11 dígitos)");
             }
-
-            if (usuario.telefone == null || usuario.telefone.isEmpty()) {
+            if (usuario.getTelefone() == null || usuario.getTelefone().isEmpty()) {
                 throw new RuntimeException("Telefone obrigatório");
             }
-
-            if (usuario.email == null || !usuario.email.contains("@")) {
+            if (usuario.getEmail() == null || !usuario.getEmail().contains("@")) {
                 throw new RuntimeException("Email inválido");
             }
         }
@@ -64,18 +59,13 @@ public class ServicoSolicitacoes {
         }
 
         if (s.isAtrasado()) {
-
             if (comentario == null || comentario.trim().isEmpty()) {
                 throw new RuntimeException("Solicitação atrasada! Justificativa obrigatória.");
             }
-
             System.out.println("Atualização com justificativa de atraso registrada.");
         }
 
-        s.status = novoStatus;
-
-        HistoricoStatus hist = new HistoricoStatus(novoStatus, responsavel, comentario);
-        s.historico.add(hist);
+        s.atualizarStatus(novoStatus, responsavel, comentario);
     }
 
     public void listar() {
@@ -93,18 +83,9 @@ public class ServicoSolicitacoes {
         }
 
         System.out.println(s);
-
         System.out.println("Histórico:");
-        for (HistoricoStatus h : s.historico) {
+        for (HistoricoStatus h : s.getHistorico()) {
             System.out.println(h);
-        }
-    }
-
-    public void justificarAtraso(String protocolo, String justificativa) {
-        Solicitacao s = banco.buscar(protocolo);
-
-        if (s != null && s.atrasado) {
-            s.justificativaAtraso = justificativa;
         }
     }
 
@@ -116,17 +97,14 @@ public class ServicoSolicitacoes {
         }
 
         for (Solicitacao s : banco.listar()) {
-
             boolean match = true;
 
-            if (bairro != null && !bairro.isEmpty() && !s.bairro.equalsIgnoreCase(bairro)) {
+            if (bairro != null && !bairro.isEmpty() && !s.getBairro().equalsIgnoreCase(bairro)) {
                 match = false;
             }
-
-            if (categoria != null && s.categoria != categoria) {
+            if (categoria != null && s.getCategoria() != categoria) {
                 match = false;
             }
-
             if (match) {
                 System.out.println(s);
             }
@@ -134,11 +112,7 @@ public class ServicoSolicitacoes {
     }
 
     public boolean protocoloValido(String protocolo) {
-
-        if (protocolo == null || protocolo.trim().isEmpty()) {
-            return false;
-        }
-
+        if (protocolo == null || protocolo.trim().isEmpty()) return false;
         return banco.buscar(protocolo) != null;
     }
 }
