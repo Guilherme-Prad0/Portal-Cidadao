@@ -1,21 +1,28 @@
+import model.HistoricoStatus;
+import model.Usuario;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Solicitacao {
 
-    String protocolo;
-    Categoria categoria;
-    String descricao;
-    String bairro;
-    Usuario usuario;
-    Status status;
-    List<HistoricoStatus> historico = new ArrayList<>();
-    LocalDateTime prazo;
-    boolean atrasado = false;
-    String justificativaAtraso;
-    Prioridade prioridade;
-    LocalDateTime dataCriacao;
+    private final String protocolo;
+    private final Categoria categoria;
+    private final String descricao;
+    private final String bairro;
+    private final Usuario usuario;
+    private final Prioridade prioridade;
+    private final LocalDateTime dataCriacao;
+    private final LocalDateTime prazo;
+
+    private Status status;
+
+    private final List<HistoricoStatus> historico = new ArrayList<>();
+
+    private boolean atrasado = false;
+    private String justificativaAtraso;
+
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
 
@@ -36,6 +43,7 @@ public class Solicitacao {
         historico.add(new HistoricoStatus(novoStatus, responsavel, comentario));
     }
 
+    @Override
     public String toString() {
         return "\nProtocolo: " + protocolo +
                 "\nCategoria: " + categoria +
@@ -55,45 +63,41 @@ public class Solicitacao {
         return "SOL-" + ano + "-" + String.format("%04d", contador++);
     }
 
-    public void verificarAtraso() {
-        if (LocalDateTime.now().isAfter(prazo) && status != Status.RESOLVIDO && status != Status.ENCERRADO) {
-            atrasado = true;
-        }
-    }
-
     private Prioridade definirPrioridade() {
 
         if (categoria == Categoria.SAUDE ||
                 categoria == Categoria.SEGURANCA_ESCOLAR) {
             return Prioridade.ALTA;
         }
-
         if (categoria == Categoria.ILUMINACAO ||
                 categoria == Categoria.BURACO) {
             return Prioridade.MEDIA;
         }
-
         return Prioridade.BAIXA;
     }
 
     private LocalDateTime definirPrazo() {
         switch (prioridade){
-            case ALTA:
-                return dataCriacao.plusDays(1);
-
-            case MEDIA:
-                return dataCriacao.plusDays(3);
-
-            case BAIXA:
-                return dataCriacao.plusDays(7);
-
-            default:
-                return dataCriacao.plusDays(5);
+            case ALTA: return dataCriacao.plusDays(1);
+            case MEDIA: return dataCriacao.plusDays(3);
+            case BAIXA: return dataCriacao.plusDays(7);
+            default: return dataCriacao.plusDays(5);
         }
     }
 
     public boolean isAtrasado() {
         return LocalDateTime.now().isAfter(prazo) && status != Status.ENCERRADO;
     }
+
+    public String getProtocolo()               { return protocolo; }
+    public Categoria getCategoria()            { return categoria; }
+    public String getBairro()                  { return bairro; }
+    public Status getStatus()                  { return status; }
+    public List<HistoricoStatus> getHistorico() { return historico; }
+    public boolean isAtrasadoFlag()            { return atrasado; }
+
+    public void setAtrasado(boolean atrasado)              { this.atrasado = atrasado; }
+    public void setJustificativaAtraso(String justificativa) { this.justificativaAtraso = justificativa; }
+
 
 }

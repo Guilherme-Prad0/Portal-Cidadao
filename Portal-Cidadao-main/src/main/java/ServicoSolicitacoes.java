@@ -1,3 +1,6 @@
+import model.HistoricoStatus;
+import model.Usuario;
+
 public class ServicoSolicitacoes {
 
     BancoSolicitacoes banco;
