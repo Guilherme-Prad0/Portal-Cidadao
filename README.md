@@ -10,7 +10,7 @@ O Portal Cidadão é um sistema de gestão de solicitações públicas via termi
 
 | Nome | RA |
 |------|----|
-| Augusto da Silva Virgilino | 24139528-2 |
+| Rodrigo Augusto da Silva Virgilino | 24139528-2 |
 | Guilherme Tamioso Bueno do Prado | 24368069-2 |
 
 ---
